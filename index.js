@@ -9,7 +9,7 @@ app.use('/api',api)
 
 const PORT = process.env.PORT || 4000
 app.get('/',(req,res)=>{
-    res.send("HELLO")
+    res.send("This is the API for Coursefy")
 })
 app.listen(PORT,()=>{
     console.log(`[index.js] Server listening on port ${PORT}`)
