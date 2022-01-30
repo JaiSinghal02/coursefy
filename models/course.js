@@ -44,14 +44,12 @@ courseSchema.pre('findOneAndUpdate', async function(next){
         if(this._update['$pull']){
             const data = this._update['$pull']
             const list = Object.keys(data)[0]
-            console.log(data)
             if(list==='enrolled'){
                 if(doc.waitlist.length===0) return next()
                 const objectToBeMoved = doc.waitlist.sort(compare)[0]
                 const index = doc.enrolled.findIndex(el => {
                     return ((el.id.toString()) === (data.enrolled.id.toString()))
                 })
-                console.log(index)
                 this.update({'enrolled.id': doc.enrolled[index].id}, { $set: { 'enrolled.$.id' : objectToBeMoved.id, 'enrolled.$.enrolledAt': new Date()}  });
                 this._update['$pull'] = {waitlist: {id: objectToBeMoved.id}}
             }
